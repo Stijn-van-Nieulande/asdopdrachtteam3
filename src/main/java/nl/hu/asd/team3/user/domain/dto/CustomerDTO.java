@@ -1,4 +1,4 @@
-package nl.hu.asd.team3.user.dto;
+package nl.hu.asd.team3.user.domain.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
