@@ -7,10 +7,9 @@ import nl.hu.asd.team3.company.domain.Location;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
 public class Train {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
     private int trainType;
     private String operationalTrainNumber;
@@ -18,10 +17,8 @@ public class Train {
     private Date scheduledDateTimeAtTransfer;
 
     private Long customerId;
-    @Transient
-    private Location transferPoint;
-    @Transient
-    private Company transfereeIM;
+    private Object transferPoint;
+    private Object transfereeIM;
 
 
     public Train(int trainType, String operationalTrainNumber, Date scheduledTimeAtHandover, Date scheduledDateTimeAtTransfer) {
@@ -29,10 +26,6 @@ public class Train {
         this.operationalTrainNumber = operationalTrainNumber;
         this.scheduledTimeAtHandover = scheduledTimeAtHandover;
         this.scheduledDateTimeAtTransfer = scheduledDateTimeAtTransfer;
-    }
-
-    public Train() {
-
     }
 
     public Long getId() {
@@ -83,19 +76,19 @@ public class Train {
         this.customerId = customerId;
     }
 
-    public Location getTransferPoint() {
+    public Object getTransferPoint() {
         return transferPoint;
     }
 
-    public void setTransferPoint(Location transferPoint) {
+    public void setTransferPoint(Object transferPoint) {
         this.transferPoint = transferPoint;
     }
 
-    public Company getTransfereeIM() {
+    public Object getTransfereeIM() {
         return transfereeIM;
     }
 
-    public void setTransfereeIM(Company transfereeIM) {
+    public void setTransfereeIM(Object transfereeIM) {
         this.transfereeIM = transfereeIM;
     }
 }
