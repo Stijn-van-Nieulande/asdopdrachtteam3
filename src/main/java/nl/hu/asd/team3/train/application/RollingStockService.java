@@ -9,6 +9,6 @@ public class RollingStockService {
     }
 
     public RollingStock createRollingStockFromDTO(inputRollingStockDTO i) {
-        return new RollingStock();
+        return new RollingStock(i.position, i.stockType);
     }
 }
