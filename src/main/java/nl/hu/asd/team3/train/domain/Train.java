@@ -3,29 +3,45 @@ package nl.hu.asd.team3.train.domain;
 import net.minidev.json.annotate.JsonIgnore;
 import nl.hu.asd.team3.company.domain.Company;
 import nl.hu.asd.team3.company.domain.Location;
+import nl.hu.asd.team3.train.adapter.service.TrainService;
 
-import javax.persistence.*;
 import java.util.Date;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Train {
-    @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    private Long id;
+    //@Id
+    //@GeneratedValue (strategy = GenerationType.AUTO)
+    // Because there is no real database, I use random number generator.
+    private Long id = ThreadLocalRandom.current().nextLong(0, 99999999);
     private int trainType;
     private String operationalTrainNumber;
     private Date scheduledTimeAtHandover;
     private Date scheduledDateTimeAtTransfer;
 
     private Long customerId;
-    private Object transferPoint;
-    private Object transfereeIM;
+    private Location transferPoint;
+    private Company transfereeIM;
 
 
-    public Train(int trainType, String operationalTrainNumber, Date scheduledTimeAtHandover, Date scheduledDateTimeAtTransfer) {
+    public Train(int trainType, String operationalTrainNumber, Date scheduledTimeAtHandover, Date scheduledDateTimeAtTransfer, String companyCode, Long locationId, TrainService trainService) {
         this.trainType = trainType;
         this.operationalTrainNumber = operationalTrainNumber;
         this.scheduledTimeAtHandover = scheduledTimeAtHandover;
         this.scheduledDateTimeAtTransfer = scheduledDateTimeAtTransfer;
+
+        this.customerId = trainService.getCustomerId();
+        this.transferPoint = trainService.getLocation(locationId);
+
+        Company tempObject = trainService.findRecipientByCode(companyCode);
+
+        if(tempObject != null){
+            this.transfereeIM = tempObject;
+        }
+    }
+
+    public Train() {
+
     }
 
     public Long getId() {
@@ -76,19 +92,34 @@ public class Train {
         this.customerId = customerId;
     }
 
-    public Object getTransferPoint() {
+    public Location getTransferPoint() {
         return transferPoint;
     }
 
-    public void setTransferPoint(Object transferPoint) {
+    public void setTransferPoint(Location transferPoint) {
         this.transferPoint = transferPoint;
     }
 
-    public Object getTransfereeIM() {
+    public Company getTransfereeIM() {
         return transfereeIM;
     }
 
-    public void setTransfereeIM(Object transfereeIM) {
+    public void setTransfereeIM(Company transfereeIM) {
         this.transfereeIM = transfereeIM;
+    }
+
+    @Override
+    public String toString() {
+            return "Train{" +
+                    "id=" + id +
+                    ", trainType=" + trainType +
+                    ", operationalTrainNumber='" + operationalTrainNumber + '\'' +
+                    ", scheduledTimeAtHandover=" + scheduledTimeAtHandover +
+                    ", scheduledDateTimeAtTransfer=" + scheduledDateTimeAtTransfer +
+                    ", customerId=" + customerId +
+                    ", transferPoint=" + transferPoint +
+                    ", transfereeIM=" + (transfereeIM != null ? transfereeIM.getName() : "null")+
+                    '}';
+
     }
 }

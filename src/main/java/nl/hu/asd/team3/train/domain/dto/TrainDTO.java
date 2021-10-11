@@ -18,4 +18,7 @@ public class TrainDTO {
         this.companyCode = companyCode;
         this.locationId = locationId;
     }
+
+    public TrainDTO() {
+    }
 }
