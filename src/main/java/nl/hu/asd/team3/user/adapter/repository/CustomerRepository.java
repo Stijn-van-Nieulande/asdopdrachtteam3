@@ -4,10 +4,11 @@ import nl.hu.asd.team3.user.domain.Customer;
 import nl.hu.asd.team3.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+//@Author Huib van Steenpaal
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, String> {
-    User findByCompany();
+    Customer findByCompany(String code);
 
-    User findByKvK();
+    Customer findByKvK(int kvk);
 }

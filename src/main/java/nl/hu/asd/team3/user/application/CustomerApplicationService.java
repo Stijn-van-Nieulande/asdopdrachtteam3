@@ -5,10 +5,13 @@ import nl.hu.asd.team3.user.adapter.service.UserService;
 import nl.hu.asd.team3.user.domain.Customer;
 import nl.hu.asd.team3.user.domain.dto.CustomerDTO;
 import org.springframework.stereotype.Service;
+//@Author Huib van Steenpaal
+
 
 @Service
 public class CustomerApplicationService {
     private final CustomerRepository repository;
+
     private final UserService service;
 
     public CustomerApplicationService(CustomerRepository repository, UserService service) {
@@ -16,17 +19,18 @@ public class CustomerApplicationService {
         this.service = service;
     }
 
-    public Customer createCustomer(CustomerDTO dto) {
+    public Customer createCustomer(CustomerDTO dto) throws Exception {
         Customer c;
-        if(dto.getCompanyCode() == null || !dto.getCompanyCode().equals("")){
-             c = new Customer(service, dto.getCompanyCode(), dto.getCustomername(), dto.getIban(), dto.getKvk());
+
+        if(dto.getCompanyCode() != null) {
+            System.out.println("code given");
+            c = new Customer(service, repository, dto.getCompanyCode(), dto.getCustomername(), dto.getIban(), dto.getKvk());
         }
-        else{
-             c = new Customer(dto.getCustomername(), dto.getIban(), dto.getKvk());
+        else {
+            System.out.println("no code given");
+            c = new Customer(repository, dto.getCustomername(), dto.getIban(), dto.getKvk());
         }
-        if(!c.checkDuplicate()){
-            return repository.save(c);
-        }
+        repository.save(c);
         return c;
     }
 }
