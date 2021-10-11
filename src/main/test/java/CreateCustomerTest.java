@@ -8,6 +8,7 @@ import nl.hu.asd.team3.user.application.CustomerApplicationService;
 import nl.hu.asd.team3.user.domain.Customer;
 import nl.hu.asd.team3.user.domain.dto.CustomerDTO;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -26,8 +27,8 @@ public class CreateCustomerTest {
     private static CustomerRESTService restService;
 
 
-    @BeforeClass
-    public static void beforeClass() {
+    @Before
+    public void setUp() {
         mockedRepo = mock(CustomerRepository.class);
         mockedService = mock(UserService.class);
 
