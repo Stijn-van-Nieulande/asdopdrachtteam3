@@ -54,7 +54,7 @@ public class CreateTrainTest {
 
         Train train = trainRESTService.createTrain(testDTO, mockLocation, mockCompany, mockSecurity);
         System.out.println(train);
-        Assertions.assertNotNull(train);
+        Assertions.assertNotNull(train.getTransfereeIM());
     }
 
     @DisplayName("create a train where a recipient does not exist")
@@ -72,6 +72,6 @@ public class CreateTrainTest {
 
         Train train = trainRESTService.createTrain(testDTO, mockLocation, mockCompany, mockSecurity);
         System.out.println(train);
-        Assertions.assertNotNull(train);
+        Assertions.assertNull(train.getTransfereeIM());
     }
 }

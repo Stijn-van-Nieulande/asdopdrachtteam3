@@ -1,7 +1,7 @@
 package nl.hu.asd.team3.company.domain;
 
 public class Company {
-    private String name;
+    private final String name;
 
     public Company(String name) {
         this.name = name;
@@ -9,9 +9,5 @@ public class Company {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
