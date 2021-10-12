@@ -1,13 +1,11 @@
 package nl.hu.asd.team3.user.domain;
 
-import lombok.NoArgsConstructor;
 import nl.hu.asd.team3.company.domain.Company;
 import nl.hu.asd.team3.user.Exception.DupeException;
 import nl.hu.asd.team3.user.Exception.NotFoundException;
 import nl.hu.asd.team3.user.adapter.repository.CustomerRepository;
 import nl.hu.asd.team3.user.adapter.service.UserService;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 //@Author Huib van Steenpaal
 
@@ -22,7 +20,7 @@ public class Customer {
     private CustomerId id;
 
     public Customer(UserService service, CustomerRepository repo, String companyCode, String customerName, String iban, int kvk, long id) throws Exception {
-        processCompanyCode(companyCode, service, repo);
+        checkAvailabilityByCode(companyCode, service, repo);
         if(repo.findByKvK(kvk) != null){
             throw new DupeException("KvK match found");
         }
@@ -62,7 +60,7 @@ public class Customer {
     }
 
 
-    public void processCompanyCode(String code, UserService service, CustomerRepository repo) throws Exception {
+    public void checkAvailabilityByCode(String code, UserService service, CustomerRepository repo) throws Exception {
         if(repo.findByCompany(code) != null){
             throw new DupeException("companyCode match found");
         }
