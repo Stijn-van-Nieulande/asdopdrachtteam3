@@ -23,7 +23,6 @@ public class Train {
     private Location transferPoint;
     private Company transfereeIM;
 
-
     public Train(int trainType, String operationalTrainNumber, Date scheduledTimeAtHandover, Date scheduledDateTimeAtTransfer, String companyCode, Long locationId, TrainService trainService) {
         this.trainType = trainType;
         this.operationalTrainNumber = operationalTrainNumber;

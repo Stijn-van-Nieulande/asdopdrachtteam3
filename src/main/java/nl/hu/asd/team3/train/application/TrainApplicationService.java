@@ -19,6 +19,8 @@ public class TrainApplicationService {
     }
 
     public Train createTrain(TrainDTO trainDTO, LocationRESTService locationRESTService, CompanyRESTService companyRESTService, SecurityContext securityContext){
-        return new Train(trainDTO.trainType, trainDTO.operationalTrainNumber, trainDTO.scheduledTimeAtHandover, trainDTO.scheduledDateTimeAtTransfer, trainDTO.companyCode, trainDTO.locationId, new TrainService(companyRESTService, locationRESTService, securityContext));
+        Train train = new Train(trainDTO.trainType, trainDTO.operationalTrainNumber, trainDTO.scheduledTimeAtHandover, trainDTO.scheduledDateTimeAtTransfer, trainDTO.companyCode, trainDTO.locationId, new TrainService(companyRESTService, locationRESTService, securityContext));
+        trainRepository.save(train);
+        return train;
     }
 }
