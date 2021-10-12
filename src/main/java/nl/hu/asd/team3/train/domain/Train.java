@@ -5,6 +5,8 @@ import nl.hu.asd.team3.company.domain.Company;
 import nl.hu.asd.team3.company.domain.Location;
 import nl.hu.asd.team3.train.adapter.service.TrainService;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -12,8 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Train {
     //@Id
     //@GeneratedValue (strategy = GenerationType.AUTO)
-    // Because there is no real database, I use random number generator.
-    private Long id = ThreadLocalRandom.current().nextLong(0, 99999999);
+
+    private TrainId id;
     private int trainType;
     private String operationalTrainNumber;
     private Date scheduledTimeAtHandover;
@@ -24,6 +26,8 @@ public class Train {
     private Company transfereeIM;
 
     public Train(int trainType, String operationalTrainNumber, Date scheduledTimeAtHandover, Date scheduledDateTimeAtTransfer, String companyCode, Long locationId, TrainService trainService) {
+        this.id = new TrainId();
+
         this.trainType = trainType;
         this.operationalTrainNumber = operationalTrainNumber;
         this.scheduledTimeAtHandover = scheduledTimeAtHandover;
@@ -41,14 +45,6 @@ public class Train {
 
     public Train() {
 
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public int getTrainType() {
