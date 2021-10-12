@@ -11,24 +11,17 @@ import javax.persistence.*;
 import java.util.ArrayList;
 //@Author Huib van Steenpaal
 
-@NoArgsConstructor
-@Entity
 public class Customer {
-
-    @OneToOne
     private Company company;
     private String name;
     private String iban;
     private int kvk;
 
-    @Transient
     private ArrayList<User> users;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private CustomerId id;
 
-    public Customer(UserService service, CustomerRepository repo, String companyCode, String customerName, String iban, int kvk) throws Exception {
+    public Customer(UserService service, CustomerRepository repo, String companyCode, String customerName, String iban, int kvk, long id) throws Exception {
         processCompanyCode(companyCode, service, repo);
         if(repo.findByKvK(kvk) != null){
             throw new DupeException("KvK match found");
@@ -37,31 +30,35 @@ public class Customer {
         this.name = customerName;
         this.iban = iban;
         this.kvk = kvk;
+        this.id = new CustomerId(id);
     }
 
-    public Customer(CustomerRepository repo, String customerName, String iban, int kvk) throws DupeException {
+    public Customer(CustomerRepository repo, String customerName, String iban, int kvk, long id) throws DupeException {
         if(repo.findByKvK(kvk) != null){
             throw new DupeException("KvK match found");
         }
         this.name = customerName;
         this.iban = iban;
         this.kvk = kvk;
+        this.id = new CustomerId(id);
     }
 
 
     // for test purposes only (Mock setup)
-    public Customer(Company company, String customerName, String iban, int kvk){
+    public Customer(Company company, String customerName, String iban, int kvk, long id){
         this.company = company;
         this.name = customerName;
         this.iban = iban;
         this.kvk = kvk;
+        this.id = new CustomerId(id);
     }
 
     // for test purposes only (Mock setup)
-    public Customer(String customerName, String iban, int kvk){
+    public Customer(String customerName, String iban, int kvk, long id){
         this.name = customerName;
         this.iban = iban;
         this.kvk = kvk;
+        this.id = new CustomerId(id);
     }
 
 
@@ -82,18 +79,10 @@ public class Customer {
         }
         sb.append(", name='").append(name).append('\'');
         sb.append(", iban='").append(iban).append('\'');
+        sb.append(", id='").append(id).append('\'');
         sb.append(", kvk=").append(kvk);
         sb.append(", users=").append(users);
         sb.append('}');
         return sb.toString();
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    public Long getId() {
-        return id;
     }
 }

@@ -9,10 +9,7 @@ import nl.hu.asd.team3.user.domain.Customer;
 import nl.hu.asd.team3.user.domain.dto.CustomerDTO;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -42,11 +39,12 @@ public class CreateCustomerTest {
         dtoNoCode.setCustomername("ankh");
         dtoNoCode.setIban("z0n3");
         dtoNoCode.setKvk(37);
+        dtoNoCode.setId(46);
 
-        Customer customer = new Customer("test", "l33t", 420);
+        Customer customer = new Customer("test", "l33t", 420, 22);
         when(mockedRepo.findByKvK(420)).thenReturn(customer);
 
-        Customer customerToSave = new Customer( "ankh", "z0n3", 37);
+        Customer customerToSave = new Customer( "ankh", "z0n3", 37, 46);
         when(mockedRepo.save(customerToSave)).thenReturn(customerToSave);
 
         Object response = restService.createCustomer(dtoNoCode);
@@ -64,14 +62,15 @@ public class CreateCustomerTest {
         dtoWithCode.setCustomername("ankh");
         dtoWithCode.setIban("z0n3");
         dtoWithCode.setKvk(37);
+        dtoWithCode.setId(46);
 
         Company company = new Company("ankhInc", "42069");
         when(mockedService.getCompanyByCode("42069")).thenReturn(company);
 
-        Customer customer = new Customer("test", "l33t", 420);
+        Customer customer = new Customer("test", "l33t", 420, 22);
         when(mockedRepo.findByKvK(420)).thenReturn(customer);
 
-        Customer customerToSave = new Customer(company, "ankh", "z0n3", 37);
+        Customer customerToSave = new Customer(company, "ankh", "z0n3", 37, 46);
         when(mockedRepo.save(customerToSave)).thenReturn(customerToSave);
 
 
@@ -87,8 +86,9 @@ public class CreateCustomerTest {
         dtoNoCode.setCustomername("ankh");
         dtoNoCode.setIban("z0n3");
         dtoNoCode.setKvk(34);
+        dtoNoCode.setId(22);
 
-        Customer customer = new Customer("ankh", "z0n3", 34);
+        Customer customer = new Customer("ankh", "z0n3", 34, 22);
         when(mockedRepo.save(customer)).thenReturn(customer);
         when(mockedRepo.findByKvK(34)).thenReturn(customer);
 
@@ -107,11 +107,12 @@ public class CreateCustomerTest {
         dtoWithCode.setCustomername("ankh");
         dtoWithCode.setIban("z0n3");
         dtoWithCode.setKvk(37);
+        dtoWithCode.setId(46);
 
         Company company = new Company("ankhInc", "42069");
         when(mockedService.getCompanyByCode("42069")).thenReturn(company);
 
-        Customer customer = new Customer(company, "ankh", "z0n3", 34);
+        Customer customer = new Customer(company, "ankh", "z0n3", 34, 22);
         when(mockedRepo.save(customer)).thenReturn(customer);
         when(mockedRepo.findByCompany("42069")).thenReturn(customer);
 
@@ -131,6 +132,8 @@ public class CreateCustomerTest {
         dtoWithCode.setCustomername("ankh");
         dtoWithCode.setIban("z0n3");
         dtoWithCode.setKvk(37);
+        dtoWithCode.setId(46);
+
 
         when(mockedRepo.findByCompany("42069")).thenReturn(null);
 

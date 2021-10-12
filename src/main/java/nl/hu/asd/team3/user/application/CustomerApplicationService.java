@@ -24,11 +24,11 @@ public class CustomerApplicationService {
 
         if(dto.getCompanyCode() != null) {
             System.out.println("code given");
-            c = new Customer(service, repository, dto.getCompanyCode(), dto.getCustomername(), dto.getIban(), dto.getKvk());
+            c = new Customer(service, repository, dto.getCompanyCode(), dto.getCustomername(), dto.getIban(), dto.getKvk(), dto.getId());
         }
         else {
             System.out.println("no code given");
-            c = new Customer(repository, dto.getCustomername(), dto.getIban(), dto.getKvk());
+            c = new Customer(repository, dto.getCustomername(), dto.getIban(), dto.getKvk(), dto.getId());
         }
         repository.save(c);
         return c;
