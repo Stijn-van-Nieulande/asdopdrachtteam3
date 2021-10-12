@@ -79,7 +79,7 @@ public class Customer {
         }
         sb.append(", name='").append(name).append('\'');
         sb.append(", iban='").append(iban).append('\'');
-        sb.append(", id='").append(id).append('\'');
+        sb.append(", id='").append(id.getId()).append('\'');
         sb.append(", kvk=").append(kvk);
         sb.append(", users=").append(users);
         sb.append('}');
