@@ -1,3 +1,4 @@
+import nl.hu.asd.team3.train.adapter.repository.RollingStockRepository;
 import nl.hu.asd.team3.train.adapter.repository.TrainCompositionRepository;
 import nl.hu.asd.team3.train.adapter.service.RollingStockRESTService;
 import nl.hu.asd.team3.train.adapter.service.dto.inputRollingStockDTO;
@@ -21,16 +22,18 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JesseTest {
-    private static TrainCompositionRepository repository;
+    private static TrainCompositionRepository trainRepository;
+    private static RollingStockRepository rollingStockRepository;
     private static RollingStockRESTService restService;
 
     @BeforeClass
     public static void beforeClass() throws Exception{
-        repository = mock(TrainCompositionRepository.class);
+        trainRepository = mock(TrainCompositionRepository.class);
+        rollingStockRepository = mock(RollingStockRepository.class);
 
-        when(repository.findById(123L)).thenReturn(java.util.Optional.of(new TrainComposition("stockType", 100)));
+        when(trainRepository.findById(123L)).thenReturn(java.util.Optional.of(new TrainComposition("stockType", 100)));
 
-        restService = new RollingStockRESTService(new TrainCompositionService(repository));
+        restService = new RollingStockRESTService(new TrainCompositionService(trainRepository, rollingStockRepository));
     }
 
     @Test
@@ -77,7 +80,6 @@ public class JesseTest {
     @MethodSource("provideRollingStockExamples")
     @DisplayName("Adds invalid RollingStockDTOs to a trainComposition")
     void addInvalidRollingStock(inputRollingStockDTO goodinput, inputRollingStockDTO i){
-        System.out.println(i.position);
         TrainComposition trainComposition = new TrainComposition("testBrake", 123);
         trainComposition.addRollingStockDTO(goodinput.position, goodinput.stockType);
         assertThrows(InvalidInputException.class,
